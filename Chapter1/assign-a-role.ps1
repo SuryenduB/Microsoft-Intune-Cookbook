@@ -1,6 +1,6 @@
 # Define the role name and user
 $rolename = "Azure AD Joined Device Local Administrator"
-$user = "test@test.onmicrosoft.com"
+$user = "intuneuser1@03z3s.onmicrosoft.com"
 
 # Install the Microsoft.Graph.DeviceManagement.Enrolment module for the current user
 Write-Host "Installing Microsoft.Graph.DeviceManagement.Enrolment module"
@@ -33,5 +33,5 @@ $params = @{
 
 # Create a new role assignment
 Write-Host "Creating new role assignment"
-New-MgRoleManagementDirectoryRoleAssignment -BodyParameter $params
+New-MgBetaRoleManagementDirectoryRoleAssignment -BodyParameter $params -Debug
 Write-Host "Role assignment created successfully"

@@ -3,8 +3,8 @@ Install-Module -Name Microsoft.Graph.Identity.DirectoryManagement -Repository PS
 import-module Microsoft.Graph.Identity.DirectoryManagement
 
 # Define the number of days to disable and remove devices
-$daystodisable = 90
-$daystoremove = 120
+$daystodisable = 10
+$daystoremove = 15
 
 # Disable devices that have not logged on within the specified number of days
 $dt = (Get-Date).AddDays(-$daystodisable)

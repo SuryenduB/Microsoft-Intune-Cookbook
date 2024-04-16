@@ -11,17 +11,41 @@ $bitlocker = "true"
 
 # Define the JSON settings for device registration
 $jsonsettings = @"
-    {
-    "@odata.context":"https://graph.microsoft.com/beta/$metadata#policies/deviceRegistrationPolicy/$entity",
-    "multiFactorAuthConfiguration":"$mfa",
-    "id":"deviceRegistrationPolicy",
-    "displayName":"Device Registration Policy",
-    "description":"Tenant-wide policy that manages intial provisioning controls using quota restrictions, additional authentication and authorization checks",
-    "userDeviceQuota":$devicequota,
-    "azureADRegistration":{"appliesTo":"$azureadregister","allowedUsers":null,"allowedGroups":null,"isAdminConfigurable":false},
-    "azureADJoin":{"appliesTo":"$azureadjoin","allowedUsers":[],"allowedGroups":[],"isAdminConfigurable":true}
+{
+	"@odata.context": "https://graph.microsoft.com/beta/`$metadata#policies/deviceRegistrationPolicy/",
+	"multiFactorAuthConfiguration": "$mfa",
+	"id": "deviceRegistrationPolicy",
+	"displayName": "Device Registration Policy",
+	"description": "Tenant-wide policy that manages intial provisioning controls using quota restrictions, additional authentication and authorization checks",
+	"userDeviceQuota": "$devicequota",
+	"azureADRegistration": {
+		"isAdminConfigurable": true,
+		"allowedToRegister": {
+			"@odata.type": "#microsoft.graph.allDeviceRegistrationMembership",
+			"users": null,
+			"groups": null
+		}
+	},
+	"azureADJoin": {
+        "isAdminConfigurable": true,
+        "allowedToJoin": {
+            "@odata.type": "#microsoft.graph.noDeviceRegistrationMembership",
+            "users": null,
+            "groups": null
+        },
+        "localAdmins": {
+            "enableGlobalAdmins": false,
+            "registeringUsers": {
+                "@odata.type": "#microsoft.graph.noDeviceRegistrationMembership"
+            }
+        }
+    },
+    "localAdminPassword": {
+        "isEnabled": true
+    }
 }
 "@
+
 
 # Define the JSON settings for Bitlocker
 $jsonbitlocker = @"

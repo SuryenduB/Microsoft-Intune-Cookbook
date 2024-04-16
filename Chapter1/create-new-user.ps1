@@ -1,11 +1,11 @@
 # Define the user details
-$displayname = "User One"
-$givenname = "User"
+$displayname = "IntuneUser One"
+$givenname = "IntuneUser"
 $surname = "One"
 $usageLocation = "GB"
-$mailNickname = "user1"
-$password = "PASSWORD HERE"
-$domainname = "DOMAIN HERE"
+$mailNickname = "intuneuser1"
+$password = "Trick@1234"
+$domainname = "03z3s.onmicrosoft.com"
 
 # Define the JSON for the new user
 $json = @"

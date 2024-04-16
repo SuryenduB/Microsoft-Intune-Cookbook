@@ -1,6 +1,6 @@
 # Set to 2 to disable or 0 to enable
-$esrstatus = 0
-$tenantid = "Your-Tenant-ID"
+$esrstatus = 2
+$tenantid = "b5683b08-cb53-45a8-b4ff-1531a0ed2f38"
 
 # Define the JSON for the ESR status
 $json = @"
@@ -15,12 +15,13 @@ $json = @"
 # Define the URL for the ESR status
 $url = "https://main.iam.ad.ext.azure.com/api/RoamingSettings?ESRV2=true"
 
+
 # Create Access Token
 $clientid = "1950a258-227b-4e31-a9cf-717495945fc2"
 
 # Request the device code for authentication
 Write-Host "Requesting device code for authentication"
-$response = Invoke-RestMethod -Method POST -UseBasicParsing -Uri "https://login.microsoftonline.com/$tenantId/oauth2/devicecode" -ContentType "application/x-www-form-urlencoded" -Body "resource=https%3A%2F%2Fmain.iam.ad.ext.azure.com&client_id=$clientId"
+$response = Invoke-RestMethod -Method POST -UseBasicParsing -Uri "https://login.microsoftonline.com/$tenantId/oauth2/devicecode" -ContentType "application/x-www-form-urlencoded" -Body "client_id=$clientId"
 Write-Host $response.message
 
 # Initialize the wait time
@@ -31,7 +32,7 @@ while($true){
     try{
         # Attempt to get the authentication response
         Write-Host "Attempting to get authentication response"
-        $authResponse = Invoke-RestMethod -uri "https://login.microsoftonline.com/$tenantId/oauth2/token" -ContentType "application/x-www-form-urlencoded" -Method POST -Body "grant_type=device_code&resource=https%3A%2F%2Fmain.iam.ad.ext.azure.com&code=$($response.device_code)&client_id=$clientId" -ErrorAction Stop
+        $authResponse = Invoke-RestMethod -uri "https://login.microsoftonline.com/$tenantId/oauth2/token" -ContentType "application/x-www-form-urlencoded" -Method POST -Body "grant_type=device_code&code=$($response.device_code)&client_id=$clientId" -ErrorAction Stop
         $refreshToken = $authResponse.refresh_token
         break
     }catch{
